@@ -1,0 +1,475 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة حسابات الأدمن - للمطورين فقط</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .warning i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+        }
+
+        .admin-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .admin-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #3498db;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .admin-details h4 {
+            color: #2c3e50;
+            margin-bottom: 0.25rem;
+        }
+
+        .admin-details p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .no-admins {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        .reset-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 2px solid #e74c3c;
+        }
+
+        .reset-section h3 {
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .reset-section p {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+        }
+
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            max-width: 300px;
+            text-align: center;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .message-success {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        .message-error {
+            background: linear-gradient(135deg, #f44336, #da190b);
+        }
+
+        .message-info {
+            background: linear-gradient(135deg, #2196F3, #0b7dda);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-cog"></i> إدارة حسابات الأدمن</h1>
+            <p>صفحة مخفية للمطورين فقط - لإدارة حسابات الأدمن</p>
+        </div>
+
+        <div class="warning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>تحذير أمني</h3>
+            <p>هذه الصفحة مخصصة للمطورين فقط. لا تشارك رابط هذه الصفحة مع أي شخص آخر.</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="adminCount">0</div>
+                <div class="stat-label">عدد الأدمن</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="card">
+                <h2><i class="fas fa-user-plus"></i> إضافة أدمن جديد</h2>
+                <form id="addAdminForm">
+                    <div class="form-group">
+                        <label for="adminUsername">اسم المستخدم</label>
+                        <input type="text" id="adminUsername" required placeholder="أدخل اسم المستخدم">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">كلمة المرور</label>
+                        <input type="password" id="adminPassword" required placeholder="أدخل كلمة المرور">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        إضافة أدمن
+                    </button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-users-cog"></i> الأدمن الحاليين</h2>
+                <div class="admin-list" id="adminList">
+                    <div class="no-admins">لا يوجد أدمن مضافين حالياً</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reset-section">
+            <h3><i class="fas fa-exclamation-triangle"></i> إعادة تعيين النظام</h3>
+            <p>سيتم حذف جميع حسابات الأدمن نهائياً. هذا الإجراء لا يمكن التراجع عنه!</p>
+            <button class="btn btn-warning" onclick="resetSystem()">
+                <i class="fas fa-redo"></i>
+                إعادة تعيين النظام
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('تم تحميل الصفحة');
+            loadAdminList();
+            
+            document.getElementById('addAdminForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addNewAdmin();
+            });
+        });
+
+        function loadAdminList() {
+            const adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || [];
+            const adminList = document.getElementById('adminList');
+            const adminCount = document.getElementById('adminCount');
+            
+            adminCount.textContent = adminUsers.length;
+            
+            if (adminUsers.length === 0) {
+                adminList.innerHTML = '<div class="no-admins">لا يوجد أدمن مضافين حالياً</div>';
+            } else {
+                adminList.innerHTML = '';
+                adminUsers.forEach((admin, index) => {
+                    const adminItem = createAdminItem(admin, index);
+                    adminList.appendChild(adminItem);
+                });
+            }
+        }
+
+        function createAdminItem(admin, index) {
+            const div = document.createElement('div');
+            div.className = 'admin-item';
+            
+            div.innerHTML = '<div class="admin-info"><div class="admin-icon"><i class="fas fa-user-shield"></i></div><div class="admin-details"><h4>' + admin.username + '</h4><p>كلمة المرور: ' + admin.password + '</p></div></div><button class="btn btn-danger" onclick="removeAdmin(' + index + ')"><i class="fas fa-trash"></i> حذف</button>';
+            
+            return div;
+        }
+
+        function addNewAdmin() {
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+            
+            if (!username || !password) {
+                showMessage('يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            const adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || [];
+            
+            const existingAdmin = adminUsers.find(admin => admin.username === username);
+            if (existingAdmin) {
+                showMessage('اسم المستخدم موجود بالفعل', 'error');
+                return;
+            }
+            
+            const newAdmin = {
+                id: Date.now(),
+                username: username,
+                password: password,
+                createdAt: new Date().toLocaleString('ar-EG')
+            };
+            
+            adminUsers.push(newAdmin);
+            localStorage.setItem('adminUsers', JSON.stringify(adminUsers));
+            
+            document.getElementById('addAdminForm').reset();
+            loadAdminList();
+            showMessage('تم إضافة الأدمن بنجاح', 'success');
+        }
+
+        function removeAdmin(index) {
+            if (confirm('هل أنت متأكد من حذف هذا الأدمن؟')) {
+                const adminUsers = JSON.parse(localStorage.getItem('adminUsers')) || [];
+                adminUsers.splice(index, 1);
+                localStorage.setItem('adminUsers', JSON.stringify(adminUsers));
+                loadAdminList();
+                showMessage('تم حذف الأدمن بنجاح', 'success');
+            }
+        }
+
+        function resetSystem() {
+            if (confirm('هل أنت متأكد من إعادة تعيين النظام؟ سيتم حذف جميع حسابات الأدمن!')) {
+                if (confirm('تأكيد نهائي: هذا الإجراء لا يمكن التراجع عنه!')) {
+                    localStorage.removeItem('adminUsers');
+                    loadAdminList();
+                    showMessage('تم إعادة تعيين النظام بنجاح', 'info');
+                }
+            }
+        }
+
+        function showMessage(message, type) {
+            const existingMessage = document.querySelector('.message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message message-' + type;
+            messageDiv.textContent = message;
+            
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.style.animation = 'slideOut 0.3s ease-out';
+                    setTimeout(() => {
+                        messageDiv.remove();
+                    }, 300);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

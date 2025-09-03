@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الطالب</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1 id="studentWelcome">لوحة الطالب</h1>
+                <div class="user-info">
+                                        <span id="studentName" class="user-name"></span>
+                    <span id="studentGrade" class="user-grade"></span>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        تسجيل الخروج
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <!-- قسم الامتحانات المتاحة -->
+            <section class="exams-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clipboard-list"></i> الامتحانات المتاحة</h2>
+                    <span id="examsCount" class="count-badge">0</span>
+                </div>
+                <div id="examsList" class="content-grid">
+                    <!-- سيتم ملء الامتحانات هنا بواسطة JavaScript -->
+                </div>
+                <div id="noExams" class="no-content" style="display: none;">
+                    <i class="fas fa-clipboard-list"></i>
+                    <p>لا توجد امتحانات متاحة لمرحلتك حالياً</p>
+                </div>
+            </section>
+
+            <!-- قسم الواجبات المتاحة -->
+            <section class="assignments-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tasks"></i> الواجبات المتاحة</h2>
+                    <span id="assignmentsCount" class="count-badge">0</span>
+                </div>
+                <div id="assignmentsList" class="content-grid">
+                    <!-- سيتم ملء الواجبات هنا بواسطة JavaScript -->
+                </div>
+                <div id="noAssignments" class="no-content" style="display: none;">
+                    <i class="fas fa-tasks"></i>
+                    <p>لا توجد واجبات متاحة لمرحلتك حالياً</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- نافذة منبثقة لرفع الحل -->
+    <div id="uploadModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">رفع حل الواجب</h3>
+                <button class="close-btn" onclick="closeUploadModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadForm">
+                    <div class="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>اسحب الملفات هنا أو اضغط لاختيارها</p>
+                        <input type="file" id="solutionFile" accept=".pdf,.jpg,.jpeg,.png" required multiple>
+                        <small>يمكنك اختيار عدة ملفات (صور أو PDF)</small>
+                    </div>
+                    <div id="filePreviewContainer" class="file-preview-container"></div>
+                    <div class="form-group">
+                        <label for="studentNotes">ملاحظات إضافية (اختياري):</label>
+                        <textarea id="studentNotes" rows="3" placeholder="أضف أي ملاحظات تريد إرسالها مع الحل..."></textarea>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-upload"></i>
+                            رفع الحل
+                        </button>
+                        <button type="button" class="cancel-btn" onclick="closeUploadModal()">
+                            إلغاء
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

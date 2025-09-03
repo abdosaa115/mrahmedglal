@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background">
+        <div class="login-container">
+            <div class="login-form">
+                <div class="login-header">
+                    <span class="key-icon">🔑</span>
+                    <h2>تسجيل الدخول</h2>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label for="username">اسم المستخدم</label>
+                        <input type="text" id="username" name="username" required placeholder="مثال: ahmed123">
+                        <small class="input-hint">أدخل اسم المستخدم الخاص بك</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="password">كلمة المرور</label>
+                        <input type="password" id="password" name="password" required placeholder="مثال: 123456">
+                        <small class="input-hint">يجب أن تحتوي على 6 أحرف على الأقل</small>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">دخول</button>
+                </form>
+                
+                <div class="signup-link">
+                    <p>ليس لديك حساب؟ <a href="#" id="signupLink">سجل الآن</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

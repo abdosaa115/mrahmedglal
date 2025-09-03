@@ -1,0 +1,275 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة مستر أحمد جلال</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- شريط التنقل العلوي -->
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="nav-left">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    تسجيل الخروج
+                </button>
+            </div>
+            <div class="nav-center">
+                <h1>إدارة مستر أحمد جلال</h1>
+            </div>
+            <div class="nav-right">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- بطاقات الإحصائيات -->
+        <div class="stats-cards">
+            <div class="stat-card blue">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>عدد الطلاب</h3>
+                    <div class="stat-number" id="studentsCount">0</div>
+                </div>
+            </div>
+            
+            <div class="stat-card green">
+                <div class="stat-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>عدد الامتحانات</h3>
+                    <div class="stat-number" id="examsCount">0</div>
+                </div>
+            </div>
+            
+            <div class="stat-card orange">
+                <div class="stat-icon">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>عدد الواجبات</h3>
+                    <div class="stat-number" id="homeworkCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- إعدادات النظام -->
+        <div class="data-section">
+            <div class="section-header">
+                <h2>إعدادات النظام</h2>
+            </div>
+            <div>
+                <span id="registrationStatus" class="status active" style="margin-left:8px">التسجيل مفعل</span>
+                <button id="toggleRegistrationBtn" class="action-btn block-btn">
+                    <i class="fas fa-ban"></i> تعطيل التسجيل
+                </button>
+            </div>
+        </div>
+
+        <!-- قسم إضافة المحتوى -->
+        <div class="content-sections">
+            <!-- إضافة امتحان جديد -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>إضافة امتحان جديد</h2>
+                </div>
+                <form class="add-form" id="examForm">
+                    <div class="form-group">
+                        <label>عنوان الامتحان</label>
+                        <input type="text" id="examTitle" placeholder="مثال: امتحان الرياضيات الشهري" required>
+                    </div>
+                    <div class="form-group">
+                        <label>وصف</label>
+                        <textarea id="examDescription" placeholder="وصف مختصر للامتحان" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>رابط الامتحان (URL)</label>
+                        <input type="url" id="examUrl" placeholder="https://example.com/exam" required>
+                    </div>
+                    <div class="form-group">
+                        <label>اختر المرحلة</label>
+                        <select id="examGrade" required>
+                            <option value="">-- اختر المرحلة --</option>
+                            <option value="grade5">الصف الخامس الابتدائي</option>
+                            <option value="grade6">الصف السادس الابتدائي</option>
+                            <option value="grade7">الصف الأول الإعدادي</option>
+                            <option value="grade8">الصف الثاني الإعدادي</option>
+                            <option value="grade9">الصف الثالث الإعدادي</option>
+                            <option value="grade10">الصف الأول الثانوي</option>
+                            <option value="grade11">الصف الثاني الثانوي</option>
+                            <option value="grade12">الصف الثالث الثانوي</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn green-btn">حفظ الامتحان</button>
+                </form>
+            </div>
+
+            <!-- إضافة واجب جديد -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>إضافة واجب جديد</h2>
+                </div>
+                <form class="add-form" id="homeworkForm">
+                    <div class="form-group">
+                        <label>عنوان الواجب</label>
+                        <input type="text" id="homeworkTitle" placeholder="مثال: واجب الفصل الأول" required>
+                    </div>
+                    <div class="form-group">
+                        <label>وصف الواجب</label>
+                        <textarea id="homeworkDescription" placeholder="تفاصيل الواجب والمطلوب" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>الدرجة الكلية (العراض 100)</label>
+                        <input type="number" id="homeworkGrade" value="100" min="1" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label>اختر المرحلة</label>
+                        <select id="homeworkGradeLevel" required>
+                            <option value="">-- اختر المرحلة --</option>
+                            <option value="grade5">الصف الخامس الابتدائي</option>
+                            <option value="grade6">الصف السادس الابتدائي</option>
+                            <option value="grade7">الصف الأول الإعدادي</option>
+                            <option value="grade8">الصف الثاني الإعدادي</option>
+                            <option value="grade9">الصف الثالث الإعدادي</option>
+                            <option value="grade10">الصف الأول الثانوي</option>
+                            <option value="grade11">الصف الثاني الثانوي</option>
+                            <option value="grade12">الصف الثالث الثانوي</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn orange-btn">حفظ الواجب</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- قسم الامتحانات -->
+        <div class="data-section">
+            <div class="section-header">
+                <h2>امتحاناتي</h2>
+            </div>
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>العنوان</th>
+                            <th>المرحلة</th>
+                            <th>الوصف</th>
+                            <th>الرابط</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="examsTableBody">
+                        <tr class="no-data">
+                            <td colspan="5">لا توجد امتحانات</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- قسم الواجبات -->
+        <div class="data-section">
+            <div class="section-header">
+                <h2>واجباتي</h2>
+            </div>
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>العنوان</th>
+                            <th>المرحلة</th>
+                            <th>الوصف</th>
+                            <th>الدرجة الكلية</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="homeworkTableBody">
+                        <tr class="no-data">
+                            <td colspan="5">لا توجد واجبات</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- إدارة تسليمات الواجبات -->
+        <div class="data-section">
+            <div class="section-header">
+                <h2>إدارة تسليمات الواجبات</h2>
+            </div>
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الطالب</th>
+                            <th>الواجب</th>
+                            <th>الملفات</th>
+                            <th>تاريخ التسليم</th>
+                            <th>الدرجة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsTableBody">
+                        <tr class="no-data">
+                            <td colspan="6">لا توجد تسليمات</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- إدارة حسابات الطلاب -->
+        <div class="data-section">
+            <div class="section-header">
+                <h2>إدارة حسابات الطلاب</h2>
+            </div>
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الاسم</th>
+                            <th>رقم الهاتف</th>
+                            <th>المرحلة التعليمية</th>
+                            <th>صورة الهوية</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsTableBody">
+                        <tr class="no-data">
+                            <td colspan="6">لا يوجد طلاب مسجلين</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة التعديل المنبثقة -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">تعديل</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- محتوى التعديل سيتم إدراجه هنا -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

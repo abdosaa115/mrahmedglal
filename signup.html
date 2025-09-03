@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب طالب</title>
+    <link rel="stylesheet" href="signup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="background">
+        <div class="signup-container">
+            <div class="signup-form">
+                <div class="signup-header">
+                    <h2>إنشاء حساب طالب</h2>
+                </div>
+                
+                <form id="signupForm">
+                    <div class="input-group">
+                        <label for="username">اسم المستخدم</label>
+                        <input type="text" id="username" name="username" required placeholder="مثال: ahmed123">
+                        <small class="input-hint">استخدم حروف إنجليزية وأرقام فقط</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="studentName">الاسم ثلاثي بالعربي</label>
+                        <input type="text" id="studentName" name="studentName" required placeholder="مثال: أحمد محمد علي">
+                        <small class="input-hint">يجب أن يحتوي على حروف عربية فقط</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="phoneNumber">رقم الهاتف</label>
+                        <input type="tel" id="phoneNumber" name="phoneNumber" required placeholder="رقم الهاتف (11 رقم)">
+                        <small class="input-hint">يجب أن يحتوي على 11 رقم</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="password">كلمة المرور (6 أحرف على الأقل)</label>
+                        <input type="password" id="password" name="password" required placeholder="مثال: 123456">
+                        <small class="input-hint">يجب أن تحتوي على 6 أحرف على الأقل</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="educationLevel">المرحلة التعليمية</label>
+                        <select id="educationLevel" name="educationLevel" required>
+                            <option value="">-- اختر المرحلة --</option>
+                            <option value="grade5">الصف الخامس الابتدائي</option>
+                            <option value="grade6">الصف السادس الابتدائي</option>
+                            <option value="grade7">الصف الأول الإعدادي</option>
+                            <option value="grade8">الصف الثاني الإعدادي</option>
+                            <option value="grade9">الصف الثالث الإعدادي</option>
+                            <option value="grade10">الصف الأول الثانوي</option>
+                            <option value="grade11">الصف الثاني الثانوي</option>
+                            <option value="grade12">الصف الثالث الثانوي</option>
+                        </select>
+                        <small class="input-hint">اختر المرحلة التعليمية المناسبة</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="idDocument">صورة شهادة الميلاد أو البطاقة</label>
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="idDocument" name="idDocument" accept="image/*" required>
+                            <label for="idDocument" class="file-upload-label">
+                                <span class="file-upload-text">اختر ملف</span>
+                                <span class="file-upload-status">لم يتم اختيار ملف</span>
+                            </label>
+                        </div>
+                        <img id="idDocumentPreview" class="file-preview" src="" alt="معاينة الصورة">
+                        <small class="input-hint">يرجى رفع صورة واضحة للشهادة أو البطاقة</small>
+                    </div>
+                    
+                    <button type="submit" class="signup-btn">تسجيل</button>
+                </form>
+                
+                <div class="login-link">
+                    <p>لديك حساب؟ <a href="index.html" id="loginLink">تسجيل الدخول</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+    <script src="signup.js"></script>
+</body>
+</html>
